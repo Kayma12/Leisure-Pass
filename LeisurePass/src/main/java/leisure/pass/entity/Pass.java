@@ -9,8 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonAutoDetect(getterVisibility=JsonAutoDetect.Visibility.NONE)
 public class Pass {
 	
 @Id
@@ -19,8 +24,8 @@ private Date date;
 private int  passLength;
 private String passCity;
 
+@ManyToOne
 @JoinColumn(name = "customerId")
-@ManyToOne(fetch = FetchType.LAZY)
 private Customer customer;
 
 @JoinColumn(name = "vendorId")

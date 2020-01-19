@@ -1,13 +1,15 @@
 package leisure.pass.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 
@@ -21,11 +23,12 @@ public class Customer {
 	private String lastName;
 	private String homeCity;
 	
+	@OneToMany(cascade={CascadeType.ALL})
+	@Fetch(FetchMode.JOIN)
+	@JoinColumn(name="customerId", referencedColumnName="customerId")
+	private Set<Pass> passes;
 	
-	@OneToMany(targetEntity=Pass.class, mappedBy="customer",cascade=CascadeType.ALL, fetch = FetchType.LAZY)    
-	private List<Pass> passes = new ArrayList<>();
-	
-	 public List<Pass> getlistOfPasses() {
+	 public Set<Pass> getlistOfPasses() {
 	        return passes;
 	        
 	    }
